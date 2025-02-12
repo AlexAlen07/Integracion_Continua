@@ -1,0 +1,30 @@
+name: Run Unit Tests
+
+on:
+  push:
+    branches:
+      - main  # Ejecutar la prueba cada vez que hagas un push en la rama main
+  pull_request:
+    branches:
+      - main  # Ejecutar la prueba cuando se cree un pull request hacia main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Usa un contenedor Ubuntu en GitHub Actions
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  # Clona tu repositorio en el contenedor
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22.14.0'  # Aquí se coloca la versión que tienes instalada
+
+      - name: Install dependencies
+        run: |
+          npm install  # Instala las dependencias de tu proyecto
+
+      - name: Run tests
+        run: |
+          npm test  # Ejecuta las pruebas unitarias con Jest
